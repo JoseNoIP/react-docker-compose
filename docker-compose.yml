@@ -7,8 +7,9 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - ${BUILD_REACT_PATH}:/var/www/
+      - ${LARAVEL_ROOT_PATH}:/var/www/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./logs/nginx/:/var/log/nginx/
       - ${SSL_PATH}:/certs
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
@@ -23,7 +24,9 @@ services:
       options:
         max-size: ${WEBSERVER_LOG_MAX_SIZE:-2m}
         max-file: ${WEBSERVER_LOG_MAX_FILE:-10}
-    networks: 
-      - webproxy
-    ports: 
-      - 8080:80
+
+#Docker Networks
+networks:
+  default:
+     external:
+       name: ${NETWORK}
