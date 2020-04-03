@@ -7,9 +7,8 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - ${LARAVEL_ROOT_PATH}:/var/www/
+      - ${BUILD_REACT_PATH}:/var/www/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
-      - ./logs/nginx/:/var/log/nginx/
       - ${SSL_PATH}:/certs
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
